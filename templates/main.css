@@ -1,0 +1,67 @@
+.background{
+    min-width:1200px;
+    height:1000px;
+    background-color: rgb(248,236,194)
+}
+.title{
+    text-align: center;
+    margin-bottom: 200px;
+    background: linear-gradient(	rgb(153, 0, 0),rgb(255, 26, 26),rgb(153, 0, 0));
+    padding:10px;
+
+}
+.card{
+    border: solid black 1px;
+    padding: 100px;
+    margin-left: 175px;
+    background: linear-gradient(	rgb(153, 0, 0),rgb(255, 26, 26),rgb(153, 0, 0));
+    text-decoration: none;
+}
+.shaded{
+    font-family: 'Franklin Gothic Medium';
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+    color:white;
+    opacity: 1.0;
+}
+table{
+    min-width: 1000px;
+    min-height: 400px;
+
+}
+th,td{
+    border: 3px solid black;
+}
+td{
+    background-color: white;
+    text-align: center;
+    text-decoration: none;
+}
+table{
+    margin-left: 400px;
+}
+.textbox{
+    width:694px;
+    height: 300px;
+}
+.formcontrol{
+    width: 700px;
+    height: 500px;
+    border: solid black 2px;
+    margin-left: 400px;
+    padding: 50px;
+}
+
+.offtitle{
+    background: linear-gradient(	rgb(153, 0, 0),rgb(255, 26, 26),rgb(153, 0, 0));
+    padding:10px;
+    text-align: center;
+}
+.halfbox{
+    width: 700px;
+    display: inline-block;
+    margin-left: 30px;
+}
