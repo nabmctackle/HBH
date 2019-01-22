@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="row container-fluid">
+    <div>
+      <h1>My Campaigns</h1>
+      <ul *ngIf="noUser; else userFound">
+        <li >You Arent Signed in! Please sign in to continue</li>
+      </ul>
+    </div>
+        <ng-template #userFound>
+          <ul>
+            <li *ngFor="let campaign of campaigns"><a href="/campaignhome/{{campaign._id}}">{{campaign.title}}</a></li>
+          </ul>
+        
+          <div class="container-fluid ">
+            <a class="btn btn-primary" href="/newcampaign">New Campaign</a>
+          </div>
+        </ng-template> 
+  </div>
+</div>

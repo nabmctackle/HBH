@@ -1,0 +1,72 @@
+<div class="container">
+  <div class= "row">
+    <h1 class="col-lg-11 ctitle">{{campaign['title']}}</h1>
+    <p>{{campaign|json}}</p>
+  </div>
+  <div class="row">
+    <div class="col-lg-4 shaded mb-2">
+      <div class="subheader shaded">Plot</div><a class="button btn-success col-lg-2 offset-lg-10" href="/addplot/{{campaign['_id']}}">Add</a>
+      <ul>
+        <a href="/plot"><li>test item</li></a>
+        <li>test item</li>
+        <li>test item</li>
+        <li>test item</li>
+      </ul>
+      <a href="/plots" class="btn btn-primary col-lg-12">Show All</a>
+    </div>
+    <div class="col-lg-4 offset-lg-4 shaded mb-2">
+        <div class="subheader shaded">Maps</div><a class="button btn-success col-lg-2 offset-lg-10" href="/addmap/{{campaign['_id']}}">Add</a>
+        <ul>
+          <a href="/map"><li>test item</li></a>
+          <li>test item</li>
+          <li>test item</li>
+          <li>test item</li>
+        </ul>
+        <a href="/maps" class="btn btn-primary col-lg-12">Show All</a>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-lg-4 shaded mb-2">
+        <div class="subheader shaded">Locations</div><a class="button btn-success col-lg-2 offset-lg-10" href="/addlocation/{{campaign['_id']}}">Add</a>
+        <ul>
+          <a href="/location"><li>test item</li></a>
+          <li>test item</li>
+          <li>test item</li>
+          <li>test item</li>
+        </ul>
+        <a href="/locations" class="btn btn-primary col-lg-12">Show All</a>
+      </div>
+      <div class="col-lg-4 offset-lg-4 shaded mb-2">
+          <div class="subheader shaded">Characters</div><a class="button btn-success col-lg-2 offset-lg-10" href="/addcharacter/{{campaign['_id']}}">Add</a>
+          <ul>
+            <a href="/character"><li>test item</li></a>
+            <li>test item</li>
+            <li>test item</li>
+            <li>test item</li>
+          </ul>
+          <a href="/characters" class="btn btn-primary col-lg-12">Show All</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 shaded mb-2">
+          <div class="subheader shaded">Beastiary</div><a class="button btn-success col-lg-2 offset-lg-10" href="/addbeast/{{campaign['_id']}}">Add</a>
+          <ul>
+            <a href="beast"><li>test item</li></a>
+            <li>test item</li>
+            <li>test item</li>
+            <li>test item</li>
+          </ul>
+          <a href="/beastiary" class="btn btn-primary col-lg-12">Show All</a>
+        </div>
+        <div class="col-lg-4 offset-lg-4 shaded mb-2">
+            <div class="subheader shaded">Items</div><a class="button btn-success col-lg-2 offset-lg-10" href="/additem/{{campaign['_id']}}">Add</a>
+            <ul>
+              <a href="/item"><li>test item</li></a>
+              <li>test item</li>
+              <li>test item</li>
+              <li>test item</li>
+            </ul>
+            <a href="/items" class="btn btn-primary col-lg-12">Show All</a>
+          </div>
+      </div>
+</div>

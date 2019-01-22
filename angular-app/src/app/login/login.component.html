@@ -1,0 +1,53 @@
+
+<div class="container">
+    <h2 class="shaded">Sign Up</h2>
+  
+    <p *ngIf="nicknameErr" class="error">{{nicknameErr.message}}</p>
+    <p *ngIf="passwordErr" class="error">{{passwordErr.message}}</p>
+    <div class="container">
+      <form (submit)=createUser()>
+        <div class="form-group row">
+          <label for="nickname" class="col-sm-2 col-form-label shaded">NickName</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="nickname" name="newUser.nickname" [(ngModel)]="newUser.nickname" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="password" class="col-sm-2 col-form-label shaded">Password</label>
+          <div class="col-sm-6">
+            <input type="password" class="form-control" id="password" name="newUser.password" [(ngModel)]="newUser.password" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="pwc" class="col-sm-2 col-form-label shaded">Password Confirm</label>
+          <div class="col-sm-6">
+            <input type="password" class="form-control" id="pwc" name="newUser.pwc" [(ngModel)]="newUser.pwc" />
+          </div>
+        </div>
+        <div class="form-group col-sm-4">
+          <input type="submit" class="form-control btn btn-primary" value="Sign up">
+        </div>
+      </form>
+    </div>
+    <h2 class="shaded">Log In</h2>
+    <div class="container">
+    
+      <form (submit)=loginUser()>
+        <div class="form-group row">
+          <label for="email" class="col-sm-2 col-form-label shaded">NickName</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="email" name="returningUser.nickname" [(ngModel)]="returningUser.nickname" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="password1" class="col-sm-2 col-form-label shaded">Password</label>
+          <div class="col-sm-6">
+            <input type="password" class="form-control" id="password1" name="returningUser.password" [(ngModel)]="returningUser.password" />
+          </div>
+        </div>
+        <div class="form-group col-sm-4">
+          <input type="submit" class="form-control btn btn-primary" value="Log In">
+        </div>
+      </form>
+    </div>
+  </div>

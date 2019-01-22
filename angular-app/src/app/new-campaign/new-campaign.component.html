@@ -1,0 +1,16 @@
+<div class="container">
+  <p>{{newCampaign | json}}</p>
+  <form (submit)=createCampaign() *ngIf="newCampaign" class="col-lg-6">
+    <div class="form-group">
+      <label class="shaded" for="title">Title: </label>
+      <input class="form-control" type="text" id="title" [(ngModel)]="newCampaign.title" name="newCampaign.title">
+    </div>
+    <div class="form-group">
+      <label class="shaded" for="plot">Plot Hook</label>
+      <textarea class="form-control" rows="10" cols="90" [(ngModel)]="newCampaign.plothook" name="newCampaign.plothook"></textarea>
+    </div>
+    <div class="form-group">
+      <input type="submit" class="btn btn-primary" value="submit">
+    </div>
+  </form>
+</div>
