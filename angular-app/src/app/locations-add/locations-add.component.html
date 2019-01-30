@@ -2,10 +2,10 @@
   <div class="row">
     <h1>Add a New Location</h1>
   </div>
-  <form>
+  <form (submit)=createLocation()>
       <div class="form-group">
         <label for="titlelocation">Location Title</label>
-        <input type="text" class="form-control" id="titlelocation" placeholder="The Title for Your Location Page">
+        <input type="text" class="form-control" id="titlelocation" placeholder="The Title for Your Location Page" [(ngModel)]="locationInput.title" name="locationInput.title">
       </div>
       <div class="form-group">
         <input type="submit" value="submit" class="btn btn-primary">

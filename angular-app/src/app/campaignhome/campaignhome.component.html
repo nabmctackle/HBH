@@ -1,4 +1,4 @@
-<div class="container">
+<div *ngIf="campaignCheck" class="container">
   <div class= "row">
     <h1 class="col-lg-11 ctitle">{{campaign['title']}}</h1>
     <p>{{campaign|json}}</p>
@@ -7,10 +7,7 @@
     <div class="col-lg-4 shaded mb-2">
       <div class="subheader shaded">Plot</div><a class="button btn-success col-lg-2 offset-lg-10" href="/addplot/{{campaign['_id']}}">Add</a>
       <ul>
-        <a href="/plot"><li>test item</li></a>
-        <li>test item</li>
-        <li>test item</li>
-        <li>test item</li>
+        <li *ngFor="let plot of campaign.plots"><a class="btn btn-dark btn-block mr-2 mb-1" href="/plot/{{plot._id}}">{{plot.title}}</a></li>
       </ul>
       <a href="/plots" class="btn btn-primary col-lg-12">Show All</a>
     </div>
@@ -29,6 +26,7 @@
       <div class="col-lg-4 shaded mb-2">
         <div class="subheader shaded">Locations</div><a class="button btn-success col-lg-2 offset-lg-10" href="/addlocation/{{campaign['_id']}}">Add</a>
         <ul>
+          <li *ngFor="let location of campaign.locations"><a class="btn btn-dark btn-block mr-2 mb-1" href="/locations/{{location._id}}">{{location.title}}</a></li>
           <a href="/location"><li>test item</li></a>
           <li>test item</li>
           <li>test item</li>
@@ -39,6 +37,7 @@
       <div class="col-lg-4 offset-lg-4 shaded mb-2">
           <div class="subheader shaded">Characters</div><a class="button btn-success col-lg-2 offset-lg-10" href="/addcharacter/{{campaign['_id']}}">Add</a>
           <ul>
+            <li *ngFor="let character of campaign.characters"><a class="btn btn-dark btn-block mr-2 mb-1" href="/character/{{character._id}}">{{character.title}}</a></li>
             <a href="/character"><li>test item</li></a>
             <li>test item</li>
             <li>test item</li>
@@ -51,6 +50,7 @@
         <div class="col-lg-4 shaded mb-2">
           <div class="subheader shaded">Beastiary</div><a class="button btn-success col-lg-2 offset-lg-10" href="/addbeast/{{campaign['_id']}}">Add</a>
           <ul>
+            
             <a href="beast"><li>test item</li></a>
             <li>test item</li>
             <li>test item</li>
@@ -61,6 +61,7 @@
         <div class="col-lg-4 offset-lg-4 shaded mb-2">
             <div class="subheader shaded">Items</div><a class="button btn-success col-lg-2 offset-lg-10" href="/additem/{{campaign['_id']}}">Add</a>
             <ul>
+              <li *ngFor="let item of campaign.items"><a class="btn btn-dark btn-block mr-2 mb-1" href="/item/{{item._id}}">{{item.title}}</a></li>
               <a href="/item"><li>test item</li></a>
               <li>test item</li>
               <li>test item</li>
@@ -69,4 +70,6 @@
             <a href="/items" class="btn btn-primary col-lg-12">Show All</a>
           </div>
       </div>
+      {{chars|json}}
+      {{plot|json}}
 </div>

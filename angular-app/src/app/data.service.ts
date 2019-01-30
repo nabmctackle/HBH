@@ -39,4 +39,12 @@ export class DataService {
     console.log("createPlot activated with obj:",obj)
     return this.http.post("/plot",obj)
   }
+  createLocation(obj){
+    console.log("createLoc activated with obj:", obj)
+    return this.http.post("/location",obj)
+  }
+  createCharacter(obj){
+    console.log("createChar activated with obj:",obj)
+    return this.http.post("/character",obj)
+  }
 }

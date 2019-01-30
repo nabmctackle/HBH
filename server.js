@@ -51,14 +51,15 @@ var BeastSchema =  new mongoose.Schema({
     abilities:          {type:[String]},
     actions:            {type:[String]},
     description:        {type:String},
-    links:              {type:[String]}
+    links:              {type:Object}
 })
 mongoose.model("Beast",BeastSchema)
 var Beast = mongoose.model("Beast")
 ////////////////////////////////////////////////////////////////////////////
 
 var BeastiarySchema = new mongoose.Schema({
-    beasts:     {type:[BeastSchema]}
+    beasts:             {type:[BeastSchema]},
+    links:              {type:Object}
 })
 mongoose.model("Beastiary", BeastiarySchema);
 var Beastiary = mongoose.model("Beastiary")
@@ -66,8 +67,9 @@ var Beastiary = mongoose.model("Beastiary")
 ////////////////////////////////////////////////////////////////////////////
 
 var ItemSchema = new mongoose.Schema({
-    name:       {type:String},
-    description:{type:String}
+    name:               {type:String},
+    description:        {type:String},
+    links:              {type:Object}
 })
 mongoose.model("Item", ItemSchema);
 var Item = mongoose.model("Item")
@@ -75,12 +77,27 @@ var Item = mongoose.model("Item")
 ////////////////////////////////////////////////////////////////////////////
 
 var CharacterSchema = new mongoose.Schema({
-    location:   {type:String, required:[true,"location required"], minlength:2},
-    statBlock:  {type:[Number], minlength:6},
-    abilities:  {type:[Object]},
-    img :       {type:String},
-    description:{type:String},
-    items:      {type:String}
+    title:              {type:String},
+    size:               {type:String},
+    alignment:          {type:String},
+    ac:                 {type:Number},
+    hp:                 {type:String},
+    speed:              {type:String},
+    str:                {type:Number},
+    dex:                {type:Number},
+    con:                {type:Number},
+    int:                {type:Number},
+    wis:                {type:Number},
+    cha:                {type:Number},
+    skills:             {type:[String]},
+    damageimmunities:   {type:[String]},
+    senses:             {type:[String]},
+    languages:          {type:[String]},
+    cr:                 {type:Number},
+    abilities:          {type:[String]},
+    actions:            {type:[String]},
+    description:        {type:String},
+    links:              {type:Object}
 })
 mongoose.model("Character", CharacterSchema);
 var Character = mongoose.model('Character')
@@ -95,7 +112,8 @@ var LocationSchema = new mongoose.Schema({
     title: String,
     content: String,
     POIarr: [Object],
-    map: String
+    map: String,
+    links:             {type:Object}
 
 
 
@@ -104,9 +122,10 @@ var LocationSchema = new mongoose.Schema({
 mongoose.model("Location", LocationSchema);
 var Location = mongoose.model("Location")
 var PlotSchema = new mongoose.Schema({
-    title:      {type:String},
-    content:    {type:String},
-    notes:      {type:[String]}
+    title:              {type:String},
+    content:            {type:String},
+    notes:              {type:[String]},
+    links:              {type:[String]}
 })
 mongoose.model("Plot",PlotSchema)
 var Plot = mongoose.model("Plot")
@@ -135,6 +154,7 @@ var UserSchema = new mongoose.Schema({
 })
 mongoose.model("User",UserSchema)
 var User = mongoose.model('User')
+
 
 ////////////////////////////////////////////////////////////////////////////
 
@@ -296,6 +316,58 @@ app.post("/plot",function(req,res){
                         }
                     })
 
+                }
+            })
+        }
+    })
+})
+app.post("/location", function(req,res){
+    console.log("location post route activated")
+    var location = new Location({title:req.body.title})
+    location.save(function(err){
+        if(err){
+            console.log("failed to create new location page, error:", err)
+            return res.json({status:false})
+        }else{
+            Campaign.findOne({_id:req.body.campaign}, function(err,campaign){
+                if(err){
+                    console.log("couldnt find that campaign")
+                    return res.json({status:false})
+                }else{
+                    campaign.locations.push(location)
+                    campaign.save(function(err){
+                        if(err){
+                            return res.json ({status:false, error:err})
+                        }else{
+                            return res.json({status:true})
+                        }
+                    })
+                }
+            })
+        }
+    })
+})
+app.post("/character", function(req,res){
+    console.log("character post route activated")
+    var character = new Character({title:req.body.title})
+    character.save(function(err){
+        if(err){
+            console.log("failed to create new character page, error:", err)
+            return res.json({status:false})
+        }else{
+            Campaign.findOne({_id:req.body.campaign}, function(err,campaign){
+                if(err){
+                    console.log("couldnt find that campaign")
+                    return res.json({status:false})
+                }else{
+                    campaign.characters.push(character)
+                    campaign.save(function(err){
+                        if(err){
+                            return res.json ({status:false, error:err})
+                        }else{
+                            return res.json({status:true})
+                        }
+                    })
                 }
             })
         }
