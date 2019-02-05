@@ -38,7 +38,7 @@ const routes: Routes = [
     {path:"characters", component: CharactersComponent},
     {path:"items", component: ItemsComponent},
     {path:"plot",component:PlotComponent},
-    {path:"location",component:LocationComponent},
+    {path:"locations/:id",component:LocationComponent},
     {path:"beast", component:BeastComponent},
     {path:"map", component:MapComponent},
     {path:"character", component:CharacterComponent},

@@ -47,4 +47,12 @@ export class DataService {
     console.log("createChar activated with obj:",obj)
     return this.http.post("/character",obj)
   }
+  getLocation(str){
+    console.log("getLocation activated with str", str)
+    return this.http.get("/location/"+str)
+  }
+  updateLocation(obj){
+  console.log("updatelocation activated with obj", obj)
+  return this.http.put("/locations",obj)
+  }
 }

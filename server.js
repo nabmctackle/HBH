@@ -321,6 +321,28 @@ app.post("/plot",function(req,res){
         }
     })
 })
+app.get("/location/:id",function(req,res){
+    console.log("location get route activated with id:",req.params.id)
+    Location.findById(req.params.id, function(err,location){
+        if(err){
+            console.log("error occured ", err)
+            return res.json({status:false, err:err})
+        }else{
+            return res.json({status:true, location:location})
+        }
+    })
+})
+app.put("/location",function(req,res){
+    Location.findById(req.body.locationId, function(err,location){
+        if(err){
+            return res.json({status:false, err:err})
+        }else{
+            if(req.body.update=="POI"){
+                //left off here
+            }
+        }
+    })
+})
 app.post("/location", function(req,res){
     console.log("location post route activated")
     var location = new Location({title:req.body.title})
