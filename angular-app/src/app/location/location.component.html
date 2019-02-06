@@ -1,12 +1,13 @@
-<div class="container">
+<div *ngIf="locationObj" class="container">
   <div class="row">
     <h1 class="offset-lg-4">The City of Del</h1>
-    <button (click)="toggleEdit()" *ngIf="editing" class="offset-lg-3 btn btn-primary">Enable Editing</button>
-    <button (click)="toggleEdit()" *ngIf="editing==false" class="offset-lg-3 btn btn-warning">Disable Editing</button>
+    <p>{{locationObj | json}}</p>
+    <button (click)="toggleEdit()" *ngIf="editing" class="offset-lg-10 btn btn-primary">Enable Editing</button>
+    <button (click)="toggleEdit()" *ngIf="editing==false" class="offset-lg-10 btn btn-warning">Disable Editing</button>
     
   </div>
   <div  class="row">
-    <img class="offset-lg-3" src="https://via.placeholder.com/550x350">
+    <img class="offset-lg-3" src={{locationObj.map}}>
     <button *ngIf="editing==false" (click)="mapEditToggle()" class="btn btn-warning">Edit</button>
   </div>
   <div *ngIf="mapEdit" class="row">
@@ -19,10 +20,10 @@
     <button (click)="toggleInfoBoxEdit()" *ngIf="editing==false" class="btn btn-warning offset-lg-8">Edit</button>
   </div>
   <div class="container">
-    <p *ngIf="infoBoxToggle==false">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
+    <p *ngIf="infoBoxToggle==false">{{locationObj.content}}</p>
     <div class="row">
-    <textarea rows="20" cols="140" *ngIf="infoBoxToggle"></textarea>
-    <button *ngIf="infoBoxToggle" class="btn btn-primary">submit</button>
+    <textarea [(ngModel)]="locationObj.content" rows="20" cols="140" *ngIf="infoBoxToggle"></textarea>
+    <button (click)="infoBoxUpdate()" *ngIf="infoBoxToggle" class="btn btn-primary">submit</button>
     </div>
   </div>
   
@@ -33,7 +34,6 @@
   <table class="table table-dark mt-3">
     <thead>
       <tr>
-        <th scope="col">#</th>
         <th scope="col">Points of Interest</th>
         <th scope="col">Description</th>
         <th scope="col">Link Number</th>
@@ -41,39 +41,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td scope="col">Tavern</td>
-        <td scope="col">Main tavern in city of del</td>
-        <td scope="col">N/A</td>
-        <td *ngIf="editing==false" scope="col"><button class="btn btn-warning">Edit</button><button class="btn btn-danger">Delete</button></td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td scope="col">Mayor's House</td>
-        <td scope="col">Main tavern in city of del</td>
-        <td scope="col">N/A</td>
-        <td *ngIf="editing==false" scope="col"><button class="btn btn-warning">Edit</button><button class="btn btn-danger">Delete</button></td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td scope="col">Shady Alley</td>
-        <td scope="col">Alleyway Event</td>
-        <td scope="col">N/A</td>
-        <td *ngIf="editing==false" scope="col"><button class="btn btn-warning">Edit</button><button class="btn btn-danger">Delete</button></td>
-      </tr>
-      <tr>
-        <th scope="row">4</th>
-        <td scope="col">Marketplace</td>
-        <td scope="col">Bazaar for all types of goods</td>
-        <td scope="col">N/A</td>
-        <td *ngIf="editing==false" scope="col"><button class="btn btn-warning">Edit</button><button class="btn btn-danger">Delete</button></td>
-      </tr>
-      <tr>
-        <th scope="row">5</th>
-        <td scope="col">Madam Zho'rova's House</td>
-        <td scope="col">Fortune Telling</td>
-        <td scope="col">2</td>
+      <tr *ngFor="let x of locationObj.POIarr">
+        <td scope="col">{{x.PoiTitle}}</td>
+        <td scope="col">{{x.PoiDesc}}</td>
+        <td scope="col">{{x.PoiLink}}</td>
         <td *ngIf="editing==false" scope="col"><button class="btn btn-warning">Edit</button><button class="btn btn-danger">Delete</button></td>
       </tr>
     </tbody>
@@ -106,7 +77,7 @@
       </div>
     </div>
     <div class="form-group col-sm-4">
-      <input type="submit" class="form-control btn btn-primary" value="Add This POI">
+      <button  (click)="addPoiFunction()" class="form-control btn btn-primary">Add This POI</button>
     </div>
   </div>
     <div class="row">

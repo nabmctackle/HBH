@@ -333,13 +333,26 @@ app.get("/location/:id",function(req,res){
     })
 })
 app.put("/location",function(req,res){
-    Location.findById(req.body.locationId, function(err,location){
+    console.log(req.body.location)
+    Location.findById(req.body.location._id, function(err,location){
         if(err){
             return res.json({status:false, err:err})
         }else{
-            if(req.body.update=="POI"){
-                //left off here
-            }
+            console.log("here is the entry of db:",location)
+            location.POIarr = req.body.location.POIarr
+            location.title = req.body.location.title
+            location.content = req.body.location.content
+            location.map = req.body.location.map
+            location.links = req.body.location.links
+            location.save(function(err){
+                if(err){
+                    console.log("error when saving location:",err)
+                    return res.json({status:false,err:err})
+                }else{
+                    return res.json({status:true})
+                }
+            })
+
         }
     })
 })

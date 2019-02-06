@@ -53,6 +53,6 @@ export class DataService {
   }
   updateLocation(obj){
   console.log("updatelocation activated with obj", obj)
-  return this.http.put("/locations",obj)
+  return this.http.put("/location",obj)
   }
 }

@@ -45,13 +45,28 @@ infoBoxString:""
     this.editing=true
     this.mapEdit=false
     this.infoBoxToggle=false
-    this.addPOIobj={PoiNum:undefined,PoiTitle:"",PoiDesc:"",PoiLink:"",update:"POI", locationId:this.locationId}
+    this.addPOIobj={PoiNum:undefined,PoiTitle:"",PoiDesc:"",PoiLink:"", locationId:this.locationId}
   }
   getLocation(){
     this._dataService.getLocation(this.locationId).subscribe(
       (locationFound)=>{
         if (locationFound['status']){
           this.locationObj = locationFound['location']
+          if(this.locationObj.POIarr==undefined){
+            this.locationObj.POIarr = []
+          }
+          if(this.locationObj.title==undefined){
+            this.locationObj.title = "Undefined Title"
+          }
+          if(this.locationObj.links==undefined){
+            this.locationObj.links = []
+          }
+          if(this.locationObj.content==undefined){
+            this.locationObj.content = ""
+          }
+          if(this.locationObj.map==undefined){
+            this.locationObj.map = "https://imgur.com/hp3bUTY.jpg"
+          }
         }
         else{
           this.locationObj= false
@@ -92,12 +107,38 @@ infoBoxString:""
       this.infoBoxToggle=true
     }
   }
-  addPoiFunction(){
-    this._dataService.updateLocation(this.addPOIobj).subscribe(
+  infoBoxUpdate(){
+    this.updateLocation()
+    this.infoBoxToggle=false
+  }
+  updateLocation(){
+    this._dataService.updateLocation({location:this.locationObj}).subscribe(
       (locationUpdated)=>{
-
+        if(locationUpdated["status"]){
+          console.log("location updated")
+        }
+        else{
+          console.log("failed to update")
+        }
       }
     )
+  }
+  addPoiFunction(){
+    this.locationObj["POIarr"].push(this.addPOIobj)
+    this.PoiSort()
+    this.updateLocation()
+    this.addPOIobj={PoiNum:undefined,PoiTitle:"",PoiDesc:"",PoiLink:"", locationId:this.locationId}
+  }
+  PoiSort(){
+    for(var i=0;i<this.locationObj["POIarr"].length-1;i++){
+      for(var j=0; j<this.locationObj["POIarr"].length-i;j++){
+        if(this.locationObj["POIarr"][j]["POINum"]>this.locationObj["POIarr"][j+1]["POINum"]){
+          var temp = this.locationObj["POIarr"][j]
+          this.locationObj["POIarr"][j] = this.locationObj["POIarr"][j+1]
+          this.locationObj["POIarr"][j+1] = temp
+        }
+      }
+    }
   }
 
 }
