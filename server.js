@@ -105,19 +105,12 @@ var Character = mongoose.model('Character')
 
 
 var LocationSchema = new mongoose.Schema({
-    // map:        {type:MapSchema},
-    // characters: {type:[CharacterSchema]},
-    // plot:       {type:String},
-    // items:      [ItemSchema]
-    title: String,
-    content: String,
-    POIarr: [Object],
-    map: String,
-    links:             {type:Object}
-
-
-
-
+    title:          {type:String},
+    content:        {type:String},
+    POIarr:         {type:[Object]},
+    map:            {type:String},
+    links:          {type:Object},
+    mapHide:        {type:String}
 })
 mongoose.model("Location", LocationSchema);
 var Location = mongoose.model("Location")
@@ -241,7 +234,19 @@ app.get("/login", function(req,res){
     console.log("get login route is activated")
     if (req.session.userId!=null){
         User.findOne({_id:req.session.userId},function(err,user){
-           return res.json({ user:user._id, nickname:user.nickname, campaigns:user.campaigns}) 
+            console.log("setting session attributes test1")
+            console.log(req.session)
+            var userCampaigns=[]
+            for(var i=0;i<user.campaigns.length;i++){
+                userCampaigns.push({id:user.campaigns[i]["_id"],title:user.campaigns[i]["title"]})
+            }
+            if(req.session.currentCampaign){
+                console.log("setting session attributes test2")
+                return res.json({ user:user._id, nickname:user.nickname, campaigns:userCampaigns, currentCampaign:req.session.currentCampaign})
+            }else{
+                console.log("setting session attributes test3")
+                return res.json({ user:user._id, nickname:user.nickname, campaigns:userCampaigns, currentCampaign:false}) 
+            }
         })
     }else{
         return res.json({user:null})
@@ -274,6 +279,22 @@ app.post("/campaigns",function(req,res){
             }
         })
     }
+})
+app.post("/campaigns/:id",function(req,res){
+    console.log("/campaigns/id post activated")
+    Campaign.findById(req.params.id, function(err,campaign){
+        if(err){
+            return res.json({status:false, err:err})
+        }else if(campaign==null||campaign==undefined){
+            console.log("campaign notfound")
+            return res.json({status:false})
+        }else{
+            req.session.currentCampaign = campaign
+            ///need response here
+            return res.json({status:true})
+
+        }
+    })
 })
 app.get("/campaigns/:id", function(req,res){
     console.log("get campaigns route activated")
@@ -328,6 +349,7 @@ app.get("/location/:id",function(req,res){
             console.log("error occured ", err)
             return res.json({status:false, err:err})
         }else{
+            console.log("location found:",location)
             return res.json({status:true, location:location})
         }
     })
@@ -344,11 +366,13 @@ app.put("/location",function(req,res){
             location.content = req.body.location.content
             location.map = req.body.location.map
             location.links = req.body.location.links
+            location.mapHide = req.body.location.mapHide
             location.save(function(err){
                 if(err){
                     console.log("error when saving location:",err)
                     return res.json({status:false,err:err})
                 }else{
+                    console.log(" this was the location saved", location)
                     return res.json({status:true})
                 }
             })

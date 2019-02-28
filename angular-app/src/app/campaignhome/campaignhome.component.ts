@@ -22,16 +22,7 @@ export class CampaignhomeComponent implements OnInit {
     private _route: ActivatedRoute,
     private _router: Router
   ) { 
-  this._dataService.subject.subscribe((res) => {
-    console.log(res)
-    if (res!=null&&res.user!=null){
-      this.subject = res;
-      console.log("AppComponent, subject: ", this.subject);
-    }else{
-      console.log("didnt find a user")
-    }
-
-  })
+  
 }
   ngOnInit() {
     this.campaignCheck=false
@@ -39,7 +30,9 @@ export class CampaignhomeComponent implements OnInit {
       console.log(params['id'])
       this.campaignId=params['id']
     })
+    this.setActiveCampaign()
     this.getCampaign()
+    this.setSubject()
   }
   getCampaign(){
     this._dataService.getCampaign(this.campaignId).subscribe((campaign)=>{
@@ -59,4 +52,31 @@ export class CampaignhomeComponent implements OnInit {
       }
     })
   }
+  setActiveCampaign(){
+    console.log("setActivatecampaign activated on campaignhomecomponent")
+    this._dataService.setActiveCampaign(this.campaignId).subscribe(
+      (response)=>{
+        if(response["status"]){
+          console.log("campaign set")
+          this._dataService.userStatus()
+        }else{
+          console.log("campaign not set")
+        }
+      }
+
+    )
+  }
+  setSubject(){
+    this._dataService.subject.subscribe((res) => {
+      console.log("set subject called on campaignhome",res)
+      if (res!=null&&res.user!=null){
+        this.subject = res;
+        console.log("campaignHomeComponent, subject: ", this.subject);
+      }else{
+        console.log("campaignHomeComponent didnt find a user")
+      }
+  
+    })
+  }
 }
+

@@ -55,4 +55,8 @@ export class DataService {
   console.log("updatelocation activated with obj", obj)
   return this.http.put("/location",obj)
   }
+  setActiveCampaign(str){
+    console.log("setActiveCampaign called with str ", str)
+    return this.http.post("/campaigns/"+str,{})
+  }
 }
