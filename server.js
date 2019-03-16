@@ -114,11 +114,14 @@ var LocationSchema = new mongoose.Schema({
 })
 mongoose.model("Location", LocationSchema);
 var Location = mongoose.model("Location")
+
 var PlotSchema = new mongoose.Schema({
     title:              {type:String},
     content:            {type:String},
+    img:                {type:String},
+    imgHide:            {type:String},
     notes:              {type:[String]},
-    links:              {type:[String]}
+    links:              {type:[Object]}
 })
 mongoose.model("Plot",PlotSchema)
 var Plot = mongoose.model("Plot")
@@ -311,6 +314,43 @@ app.get("/campaigns/:id", function(req,res){
             console.log("campaign not found")
 
             return res.json({status:false,error:{errors:{'error':"campaign not found"}}})
+        }
+    })
+})
+app.get("/plot/:id", function(req,res){
+    console.log("plot get route activated with id:", req.params.id)
+    Plot.findById(req.params.id, function(err,plot){
+        if(err){
+            console.log("error occured", err)
+            return res.json({status:false, err:err})
+        }else{
+            console.log('plot found',plot)
+            return res.json({status:true, plot:plot})
+        }
+    })
+})
+app.put("/plot", function(req,res){
+    console.log("plot put route activarted with obj:", req.body)
+    Plot.findById(req.body.plot._id, function(err,plot){
+        if(err){
+            return res.json({status:false,err:err})
+        }else{
+            console.log("here is the entry of db pre edit:",plot)
+            plot.notes= req.body.plot.notes
+            plot.links=req.body.plot.links
+            plot.title=req.body.plot.title
+            plot.content = req.body.plot.content
+            plot.imgHide = req.body.plot.imgHide
+            plot.img = req.body.plot.img
+            plot.save(function(err){
+                if(err){
+                    console.log("err when saving plot",err)
+                    return res.json({status:false, err:err})
+                }else{
+                    console.log("plot saved")
+                    return res.json({status:true})
+                }
+            })
         }
     })
 })

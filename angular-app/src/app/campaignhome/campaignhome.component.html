@@ -7,7 +7,7 @@
     <div class="col-lg-4 shaded mb-2">
       <div class="subheader shaded">Plot</div><a class="button btn-success col-lg-2 offset-lg-10" href="/addplot/{{campaign['_id']}}">Add</a>
       <ul>
-        <li *ngFor="let plot of campaign.plots"><a class="btn btn-dark btn-block mr-2 mb-1" href="/plot/{{plot._id}}">{{plot.title}}</a></li>
+        <li *ngFor="let plot of campaign.plots"><a class="btn btn-dark btn-block mr-2 mb-1" href="/plots/{{plot._id}}">{{plot.title}}</a></li>
       </ul>
       <a href="/plots" class="btn btn-primary col-lg-12">Show All</a>
     </div>

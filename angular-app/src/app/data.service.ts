@@ -59,4 +59,12 @@ export class DataService {
     console.log("setActiveCampaign called with str ", str)
     return this.http.post("/campaigns/"+str,{})
   }
+  getPlot(str){
+    console.log("getPlot activated with str", str)
+    return this.http.get("/plot/"+str)
+  }
+  updatePlot(obj){
+    console.log("updatePlot activated with obj:",obj)
+    return this.http.put("/plot",obj)
+  }
 }

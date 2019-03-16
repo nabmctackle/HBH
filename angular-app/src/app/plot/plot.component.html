@@ -1,16 +1,116 @@
-<div class="container">
-  <h1>Introduction to Zho're</h1>
-  <p>The god of the Isle, Zho, has forcefully invited your party to play in the world of his creation. At the Dm's discretion,
-     the party is teleported into his personal domain. Inside the domain players feel as though they are unable to move any part of their
-    body escept for their head. During this time, Zho will give a short spiel about watching the characters progress, and how he would like for them to play in his world.
-     Upon being asked any questions, Zho will simply laugh. After Giving his spiel, Zho says that they will be allowed to leave upon collection
-      of 4 keys, and then sends them out of his domain. They land just outside the city of dell, in soft grass.</p>
-  <h3>Notes for the DM</h3>
+<div *ngIf="plotObj" class="container">
+  {{plotObj|json}}
+  <div class="row">
+    <h1>{{plotObj.title}}</h1>
+    <button (click)="toggleEdit()" *ngIf="editing" class="offset-lg-10 btn btn-primary">Enable Editing</button>
+    <button (click)="toggleEdit()" *ngIf="editing==false" class="offset-lg-10 btn btn-warning">Disable Editing</button>
+  </div>
+  
+  <div  class="row">
+      <button *ngIf="editing==false" (click)="mapHideToggle()" class="btn btn-primary">Toggle Map</button>
+      <div *ngIf="plotObj.imgHide=='true'">
+      <img class="offset-lg-3" src={{plotObj.img}}>
+      <button *ngIf="editing==false" (click)="mapEditToggle()" class="btn btn-warning">Edit</button>
+      </div>
+    </div>
+    <div *ngIf="mapEdit" class="row">
+        <p>imgur.com/</p>
+        <input type="text" [(ngModel)]="mapEditString">
+        <p>.jpg</p>
+        <button class="btn btn-primary">Submit</button>
+      </div>
+    <div class="container">
+      <div class="row">
+        <h3>Main Content:</h3>
+        <button (click)="toggleInfoBoxEdit()" *ngIf="editing==false" class="btn btn-warning offset-lg-8">Edit</button>
+      </div>
+        <p *ngIf="infoBoxToggle==false">{{plotObj.content}}</p>
+        <div class="row">
+        <textarea [(ngModel)]="plotObj.content" rows="20" cols="140" *ngIf="infoBoxToggle"></textarea>
+        <button (click)="infoBoxUpdate()" *ngIf="infoBoxToggle" class="btn btn-primary">submit</button>
+        </div>
+      </div>
+  <div class="container">
+    <div class="row">
+      <h3>Notes for the DM</h3>
+      <button *ngIf="editing==false" (click)="noteAddToggle()" class="btn btn-success offset-lg-8">Add</button>
+    </div>
+    <div class="row" *ngIf="noteAddBool">
+      <input type="text" [(ngModel)]="dmNote">
+      <button (click)="noteAdd()" class="btn btn-success">Add Note</button>
+    </div>
+  </div>
+  
   <ul>
-    <li>Zho should be happy, and jovial</li>
-    <li>Zho has blue skin, and is 40 feet tall. He is the god of games, and enjoys good displays of valor, cunning and wit</li>
-    <li>There is no way off of the island of Zho're</li>
+    <li *ngFor="let note of plotObj.notes ">{{note}}</li>
   </ul>
+  <div class="row">
+      <h3>This Page Links To</h3>
+      <button *ngIf="editing==false" (click)="pageLinkAddToggle()" class="btn btn-success offset-lg-8">Add</button>
+    </div>
+      <table class="table table-dark mt-3">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Title</th>
+              <th scope="col">Description</th>
+              <th scope="col">Link</th>
+              <th *ngIf="editing==false" scope="col">Admin</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let y of plotObj.links">
+              <td scope="col">{{y.Sort + 1}}</td>
+              <td scope="col">{{y.title}}</td>
+              <td scope="col">{{y.description}}</td>
+              <td scope="col"><a href="{{y.link}}" class="btn btn-primary">{{y.type}}</a></td>
+              <td *ngIf="editing==false" scope="col"><button (click)="linkDelete(y.Sort)" class="btn btn-danger">Delete</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="pageLinkAdd">
+          <h1>Hello</h1>
+          {{linkSelect}}
+          {{pageSelect | json}}
+          <label for="linkSelect1">Select Page Type to Link To</label>
+          <select name="linkSelect1" id="linkSelect1" [(ngModel)]="linkSelect1">
+            <option value="plot">Plot</option>
+            <option value="character">Character</option>
+            <option value="location">Location</option>
+            <option value="beast">Beast</option>
+            <option value="item">Item</option>
+          </select>
+          <button (click)="setLinkType()" class="btn btn-primary">Choose</button>
+        </div>
+        <div *ngIf="linkPlot">
+          <select name="pageSelect" id="pageSelect" [(ngModel)]="pageSelect">
+            <option [ngValue]="item" *ngFor="let item of subject.currentCampaign.plots">{{item.title}}</option>
+          </select>
+        </div>
+        <div *ngIf="linkCharacter">
+            <select name="pageSelect" id="pageSelect" [(ngModel)]="pageSelect">
+                <option [ngValue]="item" *ngFor="let item of subject.currentCampaign.characters">{{item.title}}</option>
+              </select>
+        </div>
+        <div *ngIf="linkLocation">
+            <select name="pageSelect" id="pageSelect" [(ngModel)]="pageSelect">
+                <option [ngValue]="item" *ngFor="let item of subject.currentCampaign.locations">{{item.title}}</option>
+              </select>
+        </div>
+        <div *ngIf="linkBeast">
+            <select name="pageSelect" id="pageSelect" [(ngModel)]="pageSelect">
+                <option [ngValue]="item" *ngFor="let item of subject.currentCampaign.beasts">{{item.title}}</option>
+              </select>
+        </div> 
+        <div *ngIf="linkItem">
+            <select name="pageSelect" id="pageSelect" [(ngModel)]="pageSelect">
+                <option [ngValue]="item" *ngFor="let item of subject.currentCampaign.items">{{item.title}}</option>
+              </select>
+        </div>
+        
+        <input *ngIf="linkDescHide" id="linkDescription" [(ngModel)]="linkDescription">
+        <button (click)="submitLink()" class="btn btn-success">Add Link</button>
+  <!-- <h3>This Page Links To:</h3>
   <table class="table table-dark mt-3">
     <thead>
       <tr>
@@ -34,5 +134,5 @@
         <td scope="col"><a href="" class="btn btn-primary">Del</a></td>
       </tr>
     </tbody>
-    </table>
+    </table> -->
 </div>

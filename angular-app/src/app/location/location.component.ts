@@ -47,6 +47,7 @@ pageSelect:any
     })
    }
 
+
   ngOnInit() {
     this._route.params.subscribe((params: Params)=>{
       console.log(params['id'])
@@ -150,6 +151,10 @@ pageSelect:any
   infoBoxUpdate(){
     this.updateLocation()
     this.infoBoxToggle=false
+  }
+  editMap(){
+    this.locationObj.map= "https://imgur.com/"+this.mapEditString+".jpg"
+    this.updateLocation()
   }
   updateLocation(){
     this._dataService.updateLocation({location:this.locationObj}).subscribe(
