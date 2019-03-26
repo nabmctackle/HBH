@@ -67,4 +67,12 @@ export class DataService {
     console.log("updatePlot activated with obj:",obj)
     return this.http.put("/plot",obj)
   }
+  getCharacter(str){
+    console.log("getCharacter activated with str",str)
+    return this.http.get("/character/"+str)
+  }
+  updateCharacter(obj){
+    console.log("updateCharacter activated with obj:",obj)
+    return this.http.put("/character",obj)
+  }
 }

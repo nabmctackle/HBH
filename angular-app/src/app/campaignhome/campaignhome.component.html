@@ -37,7 +37,7 @@
       <div class="col-lg-4 offset-lg-4 shaded mb-2">
           <div class="subheader shaded">Characters</div><a class="button btn-success col-lg-2 offset-lg-10" href="/addcharacter/{{campaign['_id']}}">Add</a>
           <ul>
-            <li *ngFor="let character of campaign.characters"><a class="btn btn-dark btn-block mr-2 mb-1" href="/character/{{character._id}}">{{character.title}}</a></li>
+            <li *ngFor="let character of campaign.characters"><a class="btn btn-dark btn-block mr-2 mb-1" href="/characters/{{character._id}}">{{character.title}}</a></li>
             <a href="/character"><li>test item</li></a>
             <li>test item</li>
             <li>test item</li>

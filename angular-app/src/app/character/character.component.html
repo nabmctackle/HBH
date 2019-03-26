@@ -1,16 +1,27 @@
-<div class="row mt-2">
-<div class="container col-lg-5">
+<div class=" mt-2">
+<div class="container">
+    <div>{{characterObj | json}}</div>
+    <button *ngIf="editing" class="btn btn-warning" (click)="toggleEdit()">Edit This page</button>
+    <button *ngIf="editing==false" class="btn btn-warning" (click)="toggleEdit()">Stop Editing This page</button>
     <div class="row">
       <h1>Nab</h1>
     </div>
+    <div class="col-lg-4 offset-lg-2">
+        <img src="https://via.placeholder.com/550x550">
+      </div>
+      <button *ngIf="editing==false" class="btn btn-warning">Hide Img</button>
     <div class="row border-bottom border-danger">
       <h6>Medium Humanoid(Half-orc), Neutral Evil</h6>
+      <button *ngIf="editing==false" (click)="toggleStatEdit()" class="col-lg-2 offset-lg-4 btn btn-success">edit</button>
     </div>
     <div class="row">
       <h5>Armor class: 19 (Splint armor, Shield)</h5> 
     </div>
     <div class="row">
       <h5>Hit points: 70(2d8+2)</h5>
+    </div>
+    <div class="row">
+      <h5>CR: 4</h5>
     </div>
     <div class="row border-bottom border-danger">
       <h5>Speed: 30ft</h5>
@@ -39,6 +50,95 @@
         </tbody>
       </table>
     </div>
+    <div class="container" *ngIf="statBlockToggle">
+      <div class="form-group row">
+        <label for="title" class="col-sm-2 col-form-label">Title</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="title" name="characterObj.title" [(ngModel)]="characterObj.title" value="{{characterObj.title}}" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="size" class="col-sm-2 col-form-label">Size(Race)</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="size" name="characterObj.size" [(ngModel)]="characterObj.size" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="alignment" class="col-sm-2 col-form-label">alignment</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="alignment" name="characterObj.alignment" [(ngModel)]="characterObj.alignment" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="ac" class="col-sm-2 col-form-label">AC</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="ac" name="characterObj.ac" [(ngModel)]="characterObj.ac" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="hp" class="col-sm-2 col-form-label">HP</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="hp" name="characterObj.hp" [(ngModel)]="characterObj.hp" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="cr" class="col-sm-2 col-form-label">CR</label>
+        <div class="col-sm-6">
+          <input type="number" class="form-control" id="cr" name="characterObj.cr" [(ngModel)]="characterObj.cr" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="speed" class="col-sm-2 col-form-label">Speed</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="speed" name="characterObj.speed" [(ngModel)]="characterObj.speed" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="str" class="col-sm-2 col-form-label">Strength</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="str" name="characterObj.str" [(ngModel)]="characterObj.str" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="dex" class="col-sm-2 col-form-label">Dexterity</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="dex" name="characterObj.dex" [(ngModel)]="characterObj.dex" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="con" class="col-sm-2 col-form-label">Constitution</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="con" name="characterObj.con" [(ngModel)]="characterObj.con" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="int" class="col-sm-2 col-form-label">Intelligence</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="int" name="characterObj.int" [(ngModel)]="characterObj.int" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="wis" class="col-sm-2 col-form-label">Wisdom</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="wis" name="characterObj.wis" [(ngModel)]="characterObj.wis" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="cha" class="col-sm-2 col-form-label">Charisma</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="cha" name="characterObj.cha" [(ngModel)]="characterObj.cha" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="img" class="col-sm-2 col-form-label">image Url</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="img" name="characterObj.img" [(ngModel)]="characterObj.img" />
+        </div>
+      </div>
+      <div class="form-group col-sm-4">
+        <button (click)="updateCharacter()" class="form-control btn btn-primary">Submit</button>
+      </div>
+    </div>
     <div class="row">
       <h5>Skills</h5>
     </div>
@@ -48,6 +148,11 @@
         <li> Perception: +5</li>
       </ul>
     </div>
+    <div  *ngIf="editing==false" class="row">
+      <label for="skillsAdd" class="col-sm-2 col-form-label ">Add Skill</label>
+      <input type="text" class="form-control col-lg-8" name="skillsAdd" [(ngModel)]="skillsAdd">
+      <button class="btn btn-success col-lg-1 offset-lg-1" (click)="test1()">Add</button>
+    </div>
     <div class="row">
       <h5>Damage Immunities</h5>
     </div>
@@ -56,6 +161,11 @@
         <li> None</li>
       </ul>
     </div>
+    <div  *ngIf="editing==false" class="row">
+      <label for="DIAdd" class="col-sm-2 col-form-label ">Add Immunity</label>
+      <input type="text" class="form-control col-lg-8" name="DIAdd" [(ngModel)]="DIAdd">
+      <button class="btn btn-success col-lg-1 offset-lg-1" (click)="test1()">Add</button>
+    </div>
     <div class="row">
       <h5>Senses</h5>
     </div>
@@ -63,6 +173,11 @@
       <ul>
         <li> Passive Perception 15</li>
       </ul>
+    </div>
+    <div  *ngIf="editing==false" class="row">
+      <label for="senseAdd" class="col-sm-2 col-form-label ">Add Sense</label>
+      <input type="text" class="form-control col-lg-8" name="senseAdd" [(ngModel)]="senseAdd">
+      <button class="btn btn-success col-lg-1 offset-lg-1" (click)="test1()">Add</button>
     </div>
     <div class="row">
       <h5>Languages</h5>
@@ -73,9 +188,11 @@
         <li>Orcish</li>
       </ul>
     </div>
-    <div class="row border-bottom border-danger">
-      <h5>Challenge Rating: 4</h5>
-    </div>
+    <div  *ngIf="editing==false" class="row">
+        <label for="languageAdd" class="col-sm-2 col-form-label ">Add Language</label>
+        <input type="text" class="form-control col-lg-8" name="languageAdd" [(ngModel)]="languageAdd">
+        <button class="btn btn-success col-lg-1 offset-lg-1" (click)="test1()">Add</button>
+      </div>
     <div class="row">
       <h5>Abilities</h5>
     </div>
@@ -87,6 +204,11 @@
         <li>Shield Mastery</li>
       </ul>
     </div>
+    <div  *ngIf="editing==false" class="row">
+      <label for="abilityAdd" class="col-sm-2 col-form-label ">Add Ability</label>
+      <input type="text" class="form-control col-lg-8" name="abilityAdd" [(ngModel)]="abilityAdd">
+      <button class="btn btn-success col-lg-1 offset-lg-1" (click)="test1()">Add</button>
+    </div>
     <div class="row">
       <h5>Actions</h5>
     </div>
@@ -95,6 +217,11 @@
         <li>Blood Spear: Melee Weapon attack: +9 to hit reach 5 ft. one target. Hit(1d6+9) piercing damage. If the target dies from this attack Nab gains 2d6(7) temporary health</li>
         <li>ShatterSpike: Melee Weapon attack: +8 to hit reach 5 ft. one target. Hit(1d8+8) piercing damage. This weapon grants the bonuses of getting a critical hit when a successful attack is made against piece of weaponry or armor </li>
       </ul>
+    </div>
+    <div  *ngIf="editing==false" class="row">
+      <label for="actionAdd" class="col-sm-2 col-form-label ">Add Action</label>
+      <input type="text" class="form-control col-lg-8" name="actionAdd" [(ngModel)]="actionAdd">
+      <button class="btn btn-success col-lg-1 offset-lg-1" (click)="test1()">Add</button>
     </div>
     <div class="row">
       <h5>Description</h5>
@@ -106,7 +233,6 @@
     </div>
   
   </div>
-  <div class="col-lg-4 offset-lg-2">
-    <img src="https://via.placeholder.com/550x550">
-  </div>
+  
+
 </div>

@@ -77,27 +77,29 @@ var Item = mongoose.model("Item")
 ////////////////////////////////////////////////////////////////////////////
 
 var CharacterSchema = new mongoose.Schema({
-    title:              {type:String},
-    size:               {type:String},
-    alignment:          {type:String},
-    ac:                 {type:Number},
-    hp:                 {type:String},
-    speed:              {type:String},
-    str:                {type:Number},
-    dex:                {type:Number},
-    con:                {type:Number},
-    int:                {type:Number},
-    wis:                {type:Number},
-    cha:                {type:Number},
-    skills:             {type:[String]},
-    damageimmunities:   {type:[String]},
-    senses:             {type:[String]},
-    languages:          {type:[String]},
-    cr:                 {type:Number},
-    abilities:          {type:[String]},
-    actions:            {type:[String]},
-    description:        {type:String},
-    links:              {type:Object}
+    title:              {type:String, default:"No Title"},
+    size:               {type:String, default:"No Size"} ,
+    alignment:          {type:String, default:"No Alignment"},
+    ac:                 {type:String, default:"No AC"},
+    hp:                 {type:String, default:"No Hp"},
+    speed:              {type:String, default:"10"},
+    str:                {type:String, default:"10"},
+    dex:                {type:String, default:"10"},
+    con:                {type:String, default:"10"},
+    int:                {type:String, default:"10"},
+    wis:                {type:String, default:"10"},
+    cha:                {type:String, default:"10"},
+    skills:             {type:[String], default:[]},
+    damageimmunities:   {type:[String], default:[]},
+    senses:             {type:[String], default:[]},
+    languages:          {type:[String], default:[]},
+    cr:                 {type:Number, default:0},
+    abilities:          {type:[String], default:[]},
+    actions:            {type:[String], default:[]},
+    description:        {type:String, default:"No Description"},
+    links:              {type:[Object], default:[]},
+    img:                {type:String, default:"https://imgur.com/hp3bUTY.jpg"},
+    imgHide:            {type:String, default:"true"}
 })
 mongoose.model("Character", CharacterSchema);
 var Character = mongoose.model('Character')
@@ -467,6 +469,63 @@ app.post("/character", function(req,res){
                             return res.json({status:true})
                         }
                     })
+                }
+            })
+        }
+    })
+})
+app.get("/character/:id", function(req,res){
+    console.log("character get route activated with str:",req.params.id)
+    Character.findById(req.params.id, function(err,char){
+    if(err){
+        console.log("err occured when grabbing char:",err)
+        return res.json({status:false,err:err})
+    }else{
+        console.log("character found:",char)
+        return res.json({status:true, character:char})
+    }
+    })
+    
+
+})
+app.put("/character", function(req,res){
+    console.log(req.body.character)
+    Character.findById(req.body.character._id, function(err,character){
+        if(err){
+            console.log("error when finding character",err)
+            return res.json({status:false, err:err})
+        }else{
+            console.log("here is the entry of the db:",character)
+            character.title = req.body.character.title
+            character.size = req.body.character.size
+            character.alignment = req.body.character.alignment
+            character.ac = req.body.character.ac
+            character.hp = req.body.character.hp
+            character.speed = req.body.character.speed
+            character.str = req.body.character.str
+            character.dex = req.body.character.dex
+            character.con = req.body.character.con
+            character.int = req.body.character.int
+            character.wis = req.body.character.wis
+            character.cha = req.body.character.cha
+            character.skills = req.body.character.skills
+            character.damageimmunities = req.body.character.damageimmunities
+            character.senses = req.body.character.senses
+            character.languages = req.body.character.languages
+            character.cr = req.body.character.cr
+            character.abilities = req.body.character.abilities
+            character.actions = req.body.character.actions
+            character.description = req.body.character.description
+            character.links = req.body.character.links
+            character.img = req.body.character.img
+            character.imgHide = req.body.character.imgHide
+            character.save(function(err){
+                if(err){
+                    console.log("error when saving character:",err)
+                    return res.json({status:false,err:err})
+                }else{
+                    console.log("succesfully saved this character:",character)
+                    return res.json({status:true})
                 }
             })
         }

@@ -41,7 +41,7 @@ const routes: Routes = [
     {path:"locations/:id",component:LocationComponent},
     {path:"beast", component:BeastComponent},
     {path:"map", component:MapComponent},
-    {path:"character", component:CharacterComponent},
+    {path:"characters/:id", component:CharacterComponent},
     {path:"item", component:ItemComponent},
     {path:"addplot/:id", component:PlotAddComponent},
     {path:"addmap/:id", component:MapAddComponent},
