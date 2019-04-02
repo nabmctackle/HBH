@@ -151,7 +151,7 @@
     <div  *ngIf="editing==false" class="row">
       <label for="skillsAdd" class="col-sm-2 col-form-label ">Add Skill</label>
       <input type="text" class="form-control col-lg-8" name="skillsAdd" [(ngModel)]="skillsAdd">
-      <button class="btn btn-success col-lg-1 offset-lg-1" (click)="test1()">Add</button>
+      <button class="btn btn-success col-lg-1 offset-lg-1" (click)="addSkill()">Add</button>
     </div>
     <div class="row">
       <h5>Damage Immunities</h5>
@@ -164,7 +164,7 @@
     <div  *ngIf="editing==false" class="row">
       <label for="DIAdd" class="col-sm-2 col-form-label ">Add Immunity</label>
       <input type="text" class="form-control col-lg-8" name="DIAdd" [(ngModel)]="DIAdd">
-      <button class="btn btn-success col-lg-1 offset-lg-1" (click)="test1()">Add</button>
+      <button class="btn btn-success col-lg-1 offset-lg-1" (click)="addDI()">Add</button>
     </div>
     <div class="row">
       <h5>Senses</h5>
@@ -177,7 +177,7 @@
     <div  *ngIf="editing==false" class="row">
       <label for="senseAdd" class="col-sm-2 col-form-label ">Add Sense</label>
       <input type="text" class="form-control col-lg-8" name="senseAdd" [(ngModel)]="senseAdd">
-      <button class="btn btn-success col-lg-1 offset-lg-1" (click)="test1()">Add</button>
+      <button class="btn btn-success col-lg-1 offset-lg-1" (click)="addSense()">Add</button>
     </div>
     <div class="row">
       <h5>Languages</h5>
@@ -190,8 +190,8 @@
     </div>
     <div  *ngIf="editing==false" class="row">
         <label for="languageAdd" class="col-sm-2 col-form-label ">Add Language</label>
-        <input type="text" class="form-control col-lg-8" name="languageAdd" [(ngModel)]="languageAdd">
-        <button class="btn btn-success col-lg-1 offset-lg-1" (click)="test1()">Add</button>
+        <input type="text" class="form-control col-lg-8" name="languagesAdd" [(ngModel)]="languagesAdd">
+        <button class="btn btn-success col-lg-1 offset-lg-1" (click)="addLanguage()">Add</button>
       </div>
     <div class="row">
       <h5>Abilities</h5>
@@ -206,8 +206,8 @@
     </div>
     <div  *ngIf="editing==false" class="row">
       <label for="abilityAdd" class="col-sm-2 col-form-label ">Add Ability</label>
-      <input type="text" class="form-control col-lg-8" name="abilityAdd" [(ngModel)]="abilityAdd">
-      <button class="btn btn-success col-lg-1 offset-lg-1" (click)="test1()">Add</button>
+      <input type="text" class="form-control col-lg-8" name="abilitiesAdd" [(ngModel)]="abilitiesAdd">
+      <button class="btn btn-success col-lg-1 offset-lg-1" (click)="addAbility()">Add</button>
     </div>
     <div class="row">
       <h5>Actions</h5>
@@ -221,15 +221,17 @@
     <div  *ngIf="editing==false" class="row">
       <label for="actionAdd" class="col-sm-2 col-form-label ">Add Action</label>
       <input type="text" class="form-control col-lg-8" name="actionAdd" [(ngModel)]="actionAdd">
-      <button class="btn btn-success col-lg-1 offset-lg-1" (click)="test1()">Add</button>
+      <button class="btn btn-success col-lg-1 offset-lg-1" (click)="addAction()">Add</button>
     </div>
     <div class="row">
       <h5>Description</h5>
+      <button *ngIf="editing==false" (click)="descEditToggle()" class="btn btn-success offset-lg-8">Edit</button>
     </div>
     <div class="row border-bottom border-danger ">
-      <ul>
-        <li>Nab is a 6 ft. tall half-orc. He has splint armor that has been adorned with White Dragon Scales across the front chestplate. His shoulderpieces Consist of a minotaur Horn shoulderplate, and a Fire Snake Head shoulderplate. He is also wears a Direwolf baclava/helm and a direwolf pelt cape.  </li>
-      </ul>
+      
+        <p *ngIf="descEdit==false">Nab is a 6 ft. tall half-orc. He has splint armor that has been adorned with White Dragon Scales across the front chestplate. His shoulderpieces Consist of a minotaur Horn shoulderplate, and a Fire Snake Head shoulderplate. He is also wears a Direwolf baclava/helm and a direwolf pelt cape.</p>
+        <textarea *ngIf="descEdit==true" [(ngModel)]="characterObj.description" rows="20" cols="140"></textarea>
+        <button *ngIf="descEdit==true" (click)="descSubmit()" class="btn btn-primary">submit</button>
     </div>
   
   </div>

@@ -18,6 +18,8 @@ export class CharacterComponent implements OnInit {
   senseAdd:any
   languagesAdd:any
   abilitiesAdd:any
+  actionAdd: any
+  descEdit:any
 
 
 
@@ -47,6 +49,7 @@ export class CharacterComponent implements OnInit {
     this.getCharacter()
     this.editing=true
     this.statBlockToggle=false
+    this.descEdit=false
 
   }
   getCharacter(){
@@ -91,5 +94,47 @@ export class CharacterComponent implements OnInit {
   test1(){
     
   }
+  addSkill(){
+    this.characterObj.skills.push(this.skillsAdd)
+    this.updateCharacter()
+    this.skillsAdd=""
+  }
+  addDI(){
+    this.characterObj.damageimmunities.push(this.DIAdd)
+    this.updateCharacter()
+    this.DIAdd=""
+  }
+  addSense(){
+    this.characterObj.senses.push(this.senseAdd)
+    this.updateCharacter()
+    this.senseAdd=""
+  }
+  addLanguage(){
+    this.characterObj.languages.push(this.languagesAdd)
+    this.updateCharacter()
+    this.languagesAdd=""
+  }
+  addAbility(){
+    this.characterObj.abilities.push(this.abilitiesAdd)
+    this.updateCharacter()
+    this.abilitiesAdd=""
+  }
+  addAction(){
+    this.characterObj.actions.push(this.actionAdd)
+    this.updateCharacter()
+    this.actionAdd=""
+  }
+  descEditToggle(){
+    if(this.descEdit){
+      this.descEdit=false
+    }else{
+      this.descEdit=true
+    }
+  }
+  descSubmit(){
+    this.updateCharacter()
+    this.descEdit=false
+  }
+
 
 }
