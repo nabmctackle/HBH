@@ -47,10 +47,21 @@ export class CharacterComponent implements OnInit {
       this.characterId=params['id']
     })
     this.getCharacter()
-    this.editing=true
+
     this.statBlockToggle=false
     this.descEdit=false
 
+  }
+  editCheck(){
+    if(this.characterObj.owner==this.subject.user){
+      this.editing=true
+      console.log("match confirmed")
+      
+    }else{
+      this.editing=false
+      console.log("owner did not match chracterobj, charobj:",this.characterObj,"subject user:",this.subject.user)
+    }
+ 
   }
   getCharacter(){
     console.log("get character function activateD")
@@ -58,6 +69,7 @@ export class CharacterComponent implements OnInit {
       (data)=>{
         if(data['status']){
           this.characterObj=data['character']
+          this.editCheck()
         }else{
           console.log("character not found")
         }
@@ -134,6 +146,10 @@ export class CharacterComponent implements OnInit {
   descSubmit(){
     this.updateCharacter()
     this.descEdit=false
+  }
+  statEdit(){
+    this.updateCharacter()
+    this.statBlockToggle=false
   }
 
 

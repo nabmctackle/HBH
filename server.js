@@ -31,6 +31,7 @@ var Map = mongoose.model('Map')
 
 
 var BeastSchema =  new mongoose.Schema({
+    owner:              {type:String},
     title:              {type:String},
     size:               {type:String},
     alignment:          {type:String},
@@ -99,7 +100,8 @@ var CharacterSchema = new mongoose.Schema({
     description:        {type:String, default:"No Description"},
     links:              {type:[Object], default:[]},
     img:                {type:String, default:"https://imgur.com/hp3bUTY.jpg"},
-    imgHide:            {type:String, default:"true"}
+    imgHide:            {type:String, default:"true"},
+    owner:              {type:String}
 })
 mongoose.model("Character", CharacterSchema);
 var Character = mongoose.model('Character')
@@ -107,6 +109,7 @@ var Character = mongoose.model('Character')
 
 
 var LocationSchema = new mongoose.Schema({
+    owner:          {type:String},
     title:          {type:String},
     content:        {type:String},
     POIarr:         {type:[Object]},
@@ -118,6 +121,7 @@ mongoose.model("Location", LocationSchema);
 var Location = mongoose.model("Location")
 
 var PlotSchema = new mongoose.Schema({
+    owner:              {type:String},
     title:              {type:String},
     content:            {type:String},
     img:                {type:String},
@@ -358,7 +362,7 @@ app.put("/plot", function(req,res){
 })
 app.post("/plot",function(req,res){
     console.log("post plot route activated")
-    var plot = new Plot({title:req.body.title,content:req.body.content})
+    var plot = new Plot({title:req.body.title,content:req.body.content, owner:req.session.userId})
     plot.save(function(err){
         if(err){
             console.log("failed to create new plot page error:",err)
@@ -383,6 +387,49 @@ app.post("/plot",function(req,res){
             })
         }
     })
+})
+app.delete("/plot/:id/:cid", function(req,res){
+    console.log("delete plot route activated with  plot id:",req.params.id,"and campaign id:",req.params.cid)
+    Plot.findById(req.params.id, function(err,plot){
+        if(err){
+            console.log("couldnt find that plot")
+            return res.json({status:false})
+        }else{
+            console.log(plot)
+            if(plot==null||req.session.userID!=plot.owner){
+                console.log("someones trying to mess with my server")
+                return res.json({status:false})
+            }
+            Campaign.findById(req.params.cid, function(err,campaign){
+                if(err){
+                    console.log("couldnt find the campaign at cid:",req.params.cid)
+                    return res.json({status:false,err:err})
+                }else{
+                    campaign.plots.id(req.params.id).remove()
+                    campaign.save(function(err){
+                        if(err){
+                            return res.json({status:false})
+                        }
+                    })
+                    console.log("reached completion point in plot removal")
+                    return res.json({status:true})
+                }
+            })
+            // campaign = plot.parent()
+            // console.log(campaign)
+            // campaign.plots.id(req.params.id).remove()
+            // return res.json({status:true})
+        }
+    })
+    // Plot.findByIdAndDelete(req.params.id, function(err,plot){
+    //     if(err){
+    //         console.log("there was an error finding that plot by id")
+    //         return res.json({status:false,err:err})
+    //     }else{
+    //         return res.json({status:"true"})
+    //     }
+    // })
+
 })
 app.get("/location/:id",function(req,res){
     console.log("location get route activated with id:",req.params.id)
@@ -424,7 +471,7 @@ app.put("/location",function(req,res){
 })
 app.post("/location", function(req,res){
     console.log("location post route activated")
-    var location = new Location({title:req.body.title})
+    var location = new Location({title:req.body.title, owner:req.session.userId})
     location.save(function(err){
         if(err){
             console.log("failed to create new location page, error:", err)
@@ -447,10 +494,11 @@ app.post("/location", function(req,res){
             })
         }
     })
+    
 })
 app.post("/character", function(req,res){
     console.log("character post route activated")
-    var character = new Character({title:req.body.title})
+    var character = new Character({title:req.body.title, owner:req.session.userId})
     character.save(function(err){
         if(err){
             console.log("failed to create new character page, error:", err)

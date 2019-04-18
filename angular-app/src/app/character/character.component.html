@@ -4,27 +4,27 @@
     <button *ngIf="editing" class="btn btn-warning" (click)="toggleEdit()">Edit This page</button>
     <button *ngIf="editing==false" class="btn btn-warning" (click)="toggleEdit()">Stop Editing This page</button>
     <div class="row">
-      <h1>Nab</h1>
+      <h1>{{characterObj.title}}</h1>
     </div>
     <div class="col-lg-4 offset-lg-2">
         <img src="https://via.placeholder.com/550x550">
       </div>
       <button *ngIf="editing==false" class="btn btn-warning">Hide Img</button>
     <div class="row border-bottom border-danger">
-      <h6>Medium Humanoid(Half-orc), Neutral Evil</h6>
+      <h6>{{characterObj.size}}, {{characterObj.alignment}}</h6>
       <button *ngIf="editing==false" (click)="toggleStatEdit()" class="col-lg-2 offset-lg-4 btn btn-success">edit</button>
     </div>
     <div class="row">
-      <h5>Armor class: 19 (Splint armor, Shield)</h5> 
+      <h5>Armor class: {{characterObj.ac}}</h5> 
     </div>
     <div class="row">
-      <h5>Hit points: 70(2d8+2)</h5>
+      <h5>Hit points: {{characterObj.hp}}</h5>
     </div>
     <div class="row">
-      <h5>CR: 4</h5>
+      <h5>CR: {{characterObj.cr}}</h5>
     </div>
     <div class="row border-bottom border-danger">
-      <h5>Speed: 30ft</h5>
+      <h5>Speed: {{characterObj.speed}}</h5>
     </div>
     <div class="row border-bottom border-danger">
       <table class="table table-bordered mt-1">
@@ -40,12 +40,12 @@
         </thead>
         <tbody>
           <tr>
-            <td scope="col">20(+5)</td>
-            <td scope="col">10(+0)</td>
-            <td scope="col">15(+2)</td>
-            <td scope="col">8(-1)</td>
-            <td scope="col">14(+2)</td>
-            <td scope="col">14(+2)</td>
+            <td scope="col">{{characterObj.str}}</td>
+            <td scope="col">{{characterObj.dex}}</td>
+            <td scope="col">{{characterObj.con}}</td>
+            <td scope="col">{{characterObj.int}}</td>
+            <td scope="col">{{characterObj.wis}}</td>
+            <td scope="col">{{characterObj.cha}}</td>
           </tr>
         </tbody>
       </table>
@@ -136,7 +136,7 @@
         </div>
       </div>
       <div class="form-group col-sm-4">
-        <button (click)="updateCharacter()" class="form-control btn btn-primary">Submit</button>
+        <button (click)="statEdit()" class="form-control btn btn-primary">Submit</button>
       </div>
     </div>
     <div class="row">
@@ -144,8 +144,8 @@
     </div>
     <div class="row border-bottom border-danger ">
       <ul>
-        <li>Athletics: +8</li>
-        <li> Perception: +5</li>
+        <li *ngFor="let skill of characterObj.skills ">{{skill}}</li>
+        <li *ngIf="characterObj.skills==[]" >No Skills</li>
       </ul>
     </div>
     <div  *ngIf="editing==false" class="row">
@@ -158,7 +158,8 @@
     </div>
     <div class="row border-bottom border-danger ">
       <ul>
-        <li> None</li>
+        <li *ngFor="let di of characterObj.damageimmunities" >{{di}}</li>
+        <li *ngIf="characterObj.damageimmunities==[]">None</li>
       </ul>
     </div>
     <div  *ngIf="editing==false" class="row">
@@ -171,7 +172,8 @@
     </div>
     <div class="row border-bottom border-danger ">
       <ul>
-        <li> Passive Perception 15</li>
+        <li *ngFor="let sense of characterObj.senses"> {{sense}}</li>
+        <li *ngIf="characterObj.senses==[]">None</li>
       </ul>
     </div>
     <div  *ngIf="editing==false" class="row">
@@ -184,8 +186,8 @@
     </div>
     <div class="row border-bottom border-danger ">
       <ul>
-        <li>Common</li>
-        <li>Orcish</li>
+        <li *ngFor="let lang of characterObj.languages">{{lang}}</li>
+        <li *ngIf="characterObj.languages==[]">None</li>
       </ul>
     </div>
     <div  *ngIf="editing==false" class="row">
@@ -198,10 +200,9 @@
     </div>
     <div class="row border-bottom border-danger ">
       <ul>
-        <li>Action Surge</li>
-        <li>Superiority Dice: 4, Manuevers known: Rally, Riposte, Disarming Attack</li>
-        <li>Second wind(1d10+6)</li>
-        <li>Shield Mastery</li>
+        <li *ngFor="let ability of characterObj.abilities">{{ability}}</li>
+        <li *ngIf="characterObj.abilities==[]">None</li>
+
       </ul>
     </div>
     <div  *ngIf="editing==false" class="row">
@@ -214,8 +215,8 @@
     </div>
     <div class="row border-bottom border-danger ">
       <ul>
-        <li>Blood Spear: Melee Weapon attack: +9 to hit reach 5 ft. one target. Hit(1d6+9) piercing damage. If the target dies from this attack Nab gains 2d6(7) temporary health</li>
-        <li>ShatterSpike: Melee Weapon attack: +8 to hit reach 5 ft. one target. Hit(1d8+8) piercing damage. This weapon grants the bonuses of getting a critical hit when a successful attack is made against piece of weaponry or armor </li>
+        <li *ngFor="let action of characterObj.actions">{{action}}</li>
+        <li *ngIf="characterObj.actions==[]">None</li>
       </ul>
     </div>
     <div  *ngIf="editing==false" class="row">
@@ -229,7 +230,7 @@
     </div>
     <div class="row border-bottom border-danger ">
       
-        <p *ngIf="descEdit==false">Nab is a 6 ft. tall half-orc. He has splint armor that has been adorned with White Dragon Scales across the front chestplate. His shoulderpieces Consist of a minotaur Horn shoulderplate, and a Fire Snake Head shoulderplate. He is also wears a Direwolf baclava/helm and a direwolf pelt cape.</p>
+        <p *ngIf="descEdit==false">{{characterObj.description}}</p>
         <textarea *ngIf="descEdit==true" [(ngModel)]="characterObj.description" rows="20" cols="140"></textarea>
         <button *ngIf="descEdit==true" (click)="descSubmit()" class="btn btn-primary">submit</button>
     </div>

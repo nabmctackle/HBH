@@ -1,27 +1,75 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Campaign Helper</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script>
-</head>
-<body>
-    <div class="background">
-        <h1 class="title shaded">Your Campaign's Title Here</h1>
-        <div class="halfbox">
-            <h4 class="offtitle shaded">Plot</h4>
-            <h4 class="offtitle shaded">locations</h4>
-            <h4 class="offtitle shaded">Beastiary</h4>
+<div *ngIf="campaignCheck" class="container">
+        <div class= "row">
+          <h1 class="col-lg-11 ctitle">{{campaign['title']}}</h1>
+          <p>{{campaign|json}}</p>
         </div>
-        <div class="halfbox">
-            <h4 class="offtitle shaded">Maps</h4>
-            <h4 class="offtitle shaded">Characters</h4>
-            <h4 class="offtitle shaded">Items</h4>
+        <div class="row">
+          <div class="col-lg-4 shaded mb-2">
+            <div class="subheader shaded">Plot</div><a class="button btn-success col-lg-2 offset-lg-10" href="/addplot/{{campaign['_id']}}">Add</a>
+            <ul>
+              <li *ngFor="let plot of campaign.plots"><a class="btn btn-dark btn-block mr-2 mb-1" href="/plots/{{plot._id}}">{{plot.title}}</a></li>
+            </ul>
+            <a href="/plots" class="btn btn-primary col-lg-12">Show All</a>
+          </div>
+          <div class="col-lg-4 offset-lg-4 shaded mb-2">
+              <div class="subheader shaded">Maps</div><a class="button btn-success col-lg-2 offset-lg-10" href="/addmap/{{campaign['_id']}}">Add</a>
+              <ul>
+                <a href="/map"><li>test item</li></a>
+                <li>test item</li>
+                <li>test item</li>
+                <li>test item</li>
+              </ul>
+              <a href="/maps" class="btn btn-primary col-lg-12">Show All</a>
+            </div>
         </div>
-    </div>
-    
-</body>
-</html>
+        <div class="row">
+            <div class="col-lg-4 shaded mb-2">
+              <div class="subheader shaded">Locations</div><a class="button btn-success col-lg-2 offset-lg-10" href="/addlocation/{{campaign['_id']}}">Add</a>
+              <ul>
+                <li *ngFor="let location of campaign.locations"><a class="btn btn-dark btn-block mr-2 mb-1" href="/locations/{{location._id}}">{{location.title}}</a></li>
+                <a href="/location"><li>test item</li></a>
+                <li>test item</li>
+                <li>test item</li>
+                <li>test item</li>
+              </ul>
+              <a href="/locations" class="btn btn-primary col-lg-12">Show All</a>
+            </div>
+            <div class="col-lg-4 offset-lg-4 shaded mb-2">
+                <div class="subheader shaded">Characters</div><a class="button btn-success col-lg-2 offset-lg-10" href="/addcharacter/{{campaign['_id']}}">Add</a>
+                <ul>
+                  <li *ngFor="let character of campaign.characters"><a class="btn btn-dark btn-block mr-2 mb-1" href="/characters/{{character._id}}">{{character.title}}</a></li>
+                  <a href="/character"><li>test item</li></a>
+                  <li>test item</li>
+                  <li>test item</li>
+                  <li>test item</li>
+                </ul>
+                <a href="/characters" class="btn btn-primary col-lg-12">Show All</a>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-lg-4 shaded mb-2">
+                <div class="subheader shaded">Beastiary</div><a class="button btn-success col-lg-2 offset-lg-10" href="/addbeast/{{campaign['_id']}}">Add</a>
+                <ul>
+                  
+                  <a href="beast"><li>test item</li></a>
+                  <li>test item</li>
+                  <li>test item</li>
+                  <li>test item</li>
+                </ul>
+                <a href="/beastiary" class="btn btn-primary col-lg-12">Show All</a>
+              </div>
+              <div class="col-lg-4 offset-lg-4 shaded mb-2">
+                  <div class="subheader shaded">Items</div><a class="button btn-success col-lg-2 offset-lg-10" href="/additem/{{campaign['_id']}}">Add</a>
+                  <ul>
+                    <li *ngFor="let item of campaign.items"><a class="btn btn-dark btn-block mr-2 mb-1" href="/item/{{item._id}}">{{item.title}}</a></li>
+                    <a href="/item"><li>test item</li></a>
+                    <li>test item</li>
+                    <li>test item</li>
+                    <li>test item</li>
+                  </ul>
+                  <a href="/items" class="btn btn-primary col-lg-12">Show All</a>
+                </div>
+            </div>
+            {{chars|json}}
+            {{plot|json}}
+      </div>

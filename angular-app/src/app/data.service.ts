@@ -75,4 +75,8 @@ export class DataService {
     console.log("updateCharacter activated with obj:",obj)
     return this.http.put("/character",obj)
   }
+  deletePlot(id,cid){
+    console.log("deletePlot activated with id:",id,"and cid:",cid)
+    return this.http.delete("/plot/"+id+"/"+cid)
+  }
 }
